@@ -1,0 +1,72 @@
+import cadquery as cq
+from cadquery.vis import show
+
+# --- Part 1: Rectangular Block with Step ---
+part_1_length = 0.375 * 0.375  # Scaled length
+part_1_width = 0.25 * 0.375  # Scaled width
+part_1_height = 0.75
+
+part_1 = (
+    cq.Workplane("XY")
+    .moveTo(0, 0)
+    .lineTo(part_1_length, 0)
+    .lineTo(part_1_length, part_1_width)
+    .lineTo(0, part_1_width)
+    .close()
+    .extrude(part_1_height)
+)
+
+# --- Cutout for Step ---
+cutout_length = 0.125 * 0.375  # Scaled length
+cutout_width = 0.125 * 0.375  # Scaled width
+cutout_depth = 0.75
+
+cutout = (
+    cq.Workplane("XY")
+    .moveTo(0.125 * 0.375, 0)
+    .lineTo(0.25 * 0.375, 0)
+    .lineTo(0.25 * 0.375, cutout_width)
+    .lineTo(0.125 * 0.375, cutout_width)
+    .close()
+    .extrude(-cutout_depth)
+)
+
+# --- Assembly: Cut the cutout from the main part ---
+part_1 = part_1.cut(cutout)
+
+# --- Coordinate System Transformation for Part 1 ---
+part_1 = part_1.rotate((0, 0, 0), (1, 0, 0), -90)
+part_1 = part_1.rotate((0, 0, 0), (0, 0, 1), -90)
+
+# --- Export to STL ---
+cq.exporters.export(part_1, './stlcq/0028/00289878.stl')</s>
+
+import cadquery as cq
+
+# --- Parameters ---
+length = 0.375 * 0.375  # Sketch length
+width = 0.25 * 0.375  # Sketch width
+height = 0.75
+cutout_length = 0.125 * 0.375  # Cutout length
+cutout_width = 0.125 * 0.375  # Cutout width
+cutout_depth = 0.75
+
+# --- Create the base rectangle ---
+part_1 = cq.Workplane("XY") \
+    .moveTo(0, 0) \
+    .lineTo(length, 0) \
+    .lineTo(length, width) \
+    .lineTo(0, width) \
+    .close() \
+    .extrude(height)
+
+# --- Create the cutout ---
+cutout = cq.Workplane("XY") \
+    .moveTo(0.125 * 0.375, 0) \
+    .lineTo(0.25 * 0.375, 0) \
+    .lineTo(0.25 * 0.375, cutout_width) \
+    .lineTo(0.125 * 0.375, cutout_width) \
+    .close() \
+    .extrude(-cutout_depth)
+
+# --- Subtract the cutout from the base rectangle ---

@@ -1,0 +1,27 @@
+import cadquery as cq
+
+# --- Part 1: Rectangular Prism ---
+length = 0.0536 * 0.1071  # Scaled length
+width = 0.1071 * 0.1071  # Scaled width
+height = 0.75
+
+part_1 = cq.Workplane("XY").rect(length, width).extrude(height)
+
+# --- Assembly (if needed, based on the single part) ---
+# In this case, there's only one part, so no assembly is needed.
+
+# --- Export to STL ---
+cq.exporters.export(part_1, './stlcq/0018/00180831.stl')</s>
+
+import cadquery as cq
+
+# --- Parameters ---
+length = 0.0536 * 0.1071  # Sketch length (scaled)
+width = 0.1071 * 0.1071  # Sketch width (scaled)
+height = 0.75
+
+# --- Create the Rectangular Prism ---
+part_1 = cq.Workplane("XY").rect(length, width).extrude(height)
+
+# --- Export to STL ---
+cq.exporters.export(part_1, './stlcq/0018/00180831.stl')</s>

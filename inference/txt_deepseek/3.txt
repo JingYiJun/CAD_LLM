@@ -1,0 +1,15 @@
+import cadquery as cq
+from cadquery.vis import show
+
+# --- Part 1: Cylinder with Curved Top ---
+part_1_sketch = cq.Workplane("XY").moveTo(0.0, 0.0).lineTo(0.3708, 0.0).threePointArc((0.3708, 0.0508), (0.3708, 0.0508)).lineTo(0.0, 0.0508).close().extrude(0.75)
+
+# --- Coordinate System Transformation for Part 1 ---
+part_1_sketch = part_1_sketch.rotate((0, 0, 0), (1, 0, 0), -90)
+part_1_sketch = part_1_sketch.rotate((0, 0, 0), (0, 0, 1), -90)
+part_1_sketch = part_1_sketch.translate((0, 0.75, 0))
+
+# --- Assembly ---
+assembly = part_1_sketch
+
+cq.exporters.export(assembly, "./stlcq/0048/00488818.stl")</s>

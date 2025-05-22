@@ -1,0 +1,42 @@
+import cadquery as cq
+
+# --- Part 1: Cylinder with Hollow Center ---
+part_1_outer_radius = 0.306 * 0.612  # Sketch radius scaled
+part_1_inner_radius = 0.225 * 0.612  # Inner radius scaled
+part_1_height = 0.45
+
+part_1 = (
+    cq.Workplane("XY")
+    .circle(part_1_outer_radius)
+    .extrude(part_1_height)
+    .faces(">Z")
+    .workplane()
+    .circle(part_1_inner_radius)
+    .cutThruAll()
+)
+
+# --- Coordinate System Transformation for Part 1 ---
+part_1 = part_1.translate((0.0612, 0.0612, 0))
+
+# --- Part 2: Ring ---
+part_2_outer_radius = 0.375 * 0.75  # Sketch radius scaled
+part_2_inner_radius = 0.3375 * 0.75  # Inner radius scaled
+part_2_height = 0.15
+
+part_2 = (
+    cq.Workplane("XY")
+    .circle(part_2_outer_radius)
+    .extrude(part_2_height)
+    .faces(">Z")
+    .workplane()
+    .circle(part_2_inner_radius)
+    .cutThruAll()
+)
+
+# --- Coordinate System Transformation for Part 2 ---
+part_2 = part_2.translate((0.0612, 0.0612, 0.45))
+
+# --- Assembly ---
+assembly = part_1.union(part_2)
+
+cq.exporters.export(assembly, "./stlcq/0048/00488919.stl")</s>
